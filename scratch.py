@@ -14,6 +14,9 @@ class Mentor:
         self.courses_attached = []
 
     def rate_hw(self, student, course, grade):
+        print(isinstance(student, Student))
+        print(course in self.courses_attached)
+        print(course in student.courses_in_progress)
         if isinstance(student, Student) and course in self.courses_attached and course in student.courses_in_progress:
             if course in student.grades:
                 student.grades[course] += [grade]
@@ -22,20 +25,32 @@ class Mentor:
         else:
             return 'Ошибка'
 
-class Lecturer(Mentor):
+class Lecturer():
     ...
 
 class Reviewer(Mentor):
     ...
 
-best_student = Student('Ruoy', 'Eman', 'your_gender')
-best_student.courses_in_progress += ['Python']
+ivan_student = Student('Иван', 'Иванов', 'м')
+cidr_student = Student('Сидр', 'Сидоров', 'м')
 
-cool_mentor = Mentor('Some', 'Buddy')
-cool_mentor.courses_attached += ['Python']
 
-cool_mentor.rate_hw(best_student, 'Python', 10)
-cool_mentor.rate_hw(best_student, 'Python', 10)
-cool_mentor.rate_hw(best_student, 'Python', 10)
+# ivan_student.finished_courses = ['Python']
+# ivan_student.courses_in_progress += ['Python']
+# cidr_student.courses_in_progress += ['Python']
+print(ivan_student.finished_courses)
 
-print(best_student.grades)
+fedor = Lecturer()
+
+#
+pen = Mentor('Some', 'Buddy')
+print(pen.rate_hw(cidr_student, 'Python', 5))
+
+# cool_mentor.courses_attached += ['Python']
+#
+# cool_mentor.rate_hw(best_student, 'Python', 10)
+# cool_mentor.rate_hw(best_student, 'Python', 10)
+# cool_mentor.rate_hw(best_student, 'Python', 10)
+#
+# print(best_student.grades)
+bnbnbnbbn
