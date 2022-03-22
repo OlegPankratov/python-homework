@@ -8,8 +8,8 @@ class Student:
         self.grades = {}
 
     def __str__(self):
-        return f"Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за домашние задания:{self.grades}\n" \
-               f"Курсы в процессе изучения:{self.courses_in_progress}\nЗавершенные курсы: {self.finished_courses}"
+        return f"Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за домашние задания:{round(self.get_average_grade(), 1)}\n" \
+               f"Курсы в процессе изучения: {self.courses_in_progress}\nЗавершенные курсы: {self.finished_courses}"
 
     def rate_hw(self, lecturer, course, grade):
         course_exists = course in self.courses_in_progress and course in lecturer.courses_attached
@@ -25,8 +25,11 @@ class Student:
         grade_list = []
         for course in self.grades:
             for grade in self.grades[course]:
-                grade_list += grade
-        average_grade = sum(grade_list) / len(grade_list)
+                grade_list += [grade]
+        if len(grade_list) == 0:
+            average_grade = 0
+        else:
+            average_grade = sum(grade_list) / len(grade_list)
         return average_grade
 
 class Mentor:
@@ -42,14 +45,17 @@ class Lecturer(Mentor):
         self.grades = {}
 
     def __str__(self):
-        return f"Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за лекции: {self.grades}"
+        return f"Имя: {self.name}\nФамилия: {self.surname}\nСредняя оценка за лекции: {round(self.get_average_grade(), 1)}"
 
     def get_average_grade(self):
         grade_list = []
         for course in self.grades:
             for grade in self.grades[course]:
-                grade_list += grade
-        average_grade = sum(grade_list) / len(grade_list)
+                grade_list += [grade]
+        if len(grade_list) == 0:
+            average_grade = 0
+        else:
+            average_grade = sum(grade_list) / len(grade_list)
         return average_grade
 
 class Reviewer(Mentor):
@@ -65,24 +71,50 @@ class Reviewer(Mentor):
         else:
             return 'Ошибка'
 
+best_student = Student('Иван', 'Иванов', 'муж.')
+best_student.courses_in_progress += ['Python']
+best_student.finished_courses += ['Введение в программирование', 'Git']
 
-#
-best_student = Student('Ruoy', 'Eman', 'your_gender')
-best_studasdasdent = Student('Ruoy', 'Eman', 'your_gender')
+best1_student = Student('Александра', 'Александрова', 'жен.')
+best1_student.courses_in_progress += ['Python']
+best1_student.finished_courses += ['Введение в программирование']
 
+cool_lecturer = Lecturer('Виктор', 'Викторов')
+cool_lecturer.courses_attached += ['Python']
 
-print(best_student.get_average_grade() >= best_studasdasdent.get_average_grade())
-# best_student.courses_in_progress += ['Python']
-best_student.finished_courses += ['Python']
-#
+cool1_lecturer = Lecturer('Елена', 'Семенова')
+cool1_lecturer.courses_attached += ['Python']
+
+cool_reviewer = Reviewer('Сергей', 'Сергеев')
+cool_reviewer.courses_attached += ['Python']
+
+cool1_reviewer = Reviewer('Василиса', 'Васильева')
+cool1_reviewer.courses_attached += ['Python']
+
+cool1_reviewer.rate_hw(best_student, 'Python', 9)
+cool1_reviewer.rate_hw(best_student, 'Python', 10)
+cool1_reviewer.rate_hw(best_student, 'Python', 9)
+
+cool_reviewer.rate_hw(best1_student, 'Python', 10)
+cool_reviewer.rate_hw(best1_student, 'Python', 9)
+cool_reviewer.rate_hw(best1_student, 'Python', 10)
+
+best_student.rate_hw(cool1_lecturer, 'Python', 9)
+best1_student.rate_hw(cool1_lecturer, 'Python', 10)
+
+best_student.rate_hw(cool_lecturer, 'Python', 10)
+best1_student.rate_hw(cool_lecturer, 'Python', 10)
+
 print(best_student)
-#
-# cool_mentor = Reviewer('Some', 'Buddy')
-# cool_mentor.courses_attached += ['Python']
-#
-# cool_mentor.rate_hw(best_student, 'Python', 6)
-# cool_mentor.rate_hw(best_student, 'Python', 10)
-# cool_mentor.rate_hw(best_student, 'Python', 8)
-#
-# print(best_student.grades)
-#
+print('------------')
+print(best1_student)
+print('------------')
+print(cool_lecturer)
+print('------------')
+print(cool1_lecturer)
+print('------------')
+print(cool_reviewer)
+print('------------')
+print(cool1_reviewer)
+print('------------')
+
