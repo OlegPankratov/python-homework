@@ -32,7 +32,6 @@ def get_shop_list_by_dishes(dishes, person_count):
                 value = {'measure': ingredient['measure'], 'quantity': quantity}
                 shop_list_by_dishes[key] = value
     for key in shop_list_by_dishes:
-        # shop_list_by_dishes[key]['quantity'] = int(shop_list_by_dishes[key]['quantity']) * int(person_count)
         shop_list_by_dishes[key]['quantity'] *= int(person_count)
     return shop_list_by_dishes
 
