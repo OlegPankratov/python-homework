@@ -28,13 +28,13 @@ def get_shop_list_by_dishes(dishes, person_count):
                 if key in shop_list_by_dishes:
                     quantity = int(shop_list_by_dishes[key]['quantity']) + int(ingredient['quantity'])
                 else:
-                    quantity = ingredient['quantity']
+                    quantity = int(ingredient['quantity'])
                 value = {'measure': ingredient['measure'], 'quantity': quantity}
                 shop_list_by_dishes[key] = value
     for key in shop_list_by_dishes:
         shop_list_by_dishes[key]['quantity'] *= int(person_count)
     return shop_list_by_dishes
 
-shop_list = get_shop_list_by_dishes(['Омлет', 'Фахитос'], 2)
+shop_list = get_shop_list_by_dishes(['Омлет', 'Фахитос'], 5)
 pprint(shop_list)
 
